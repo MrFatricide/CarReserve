@@ -1,54 +1,49 @@
 :root {
-    --primary-clr: #1d1d1f;
-  }
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'SF Pro Display', Roboto, sans-serif;
-  }
-  
+  --primary-clr: #1d1d1f;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "SF Pro Display", Roboto, sans-serif;
+}
 body {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-bottom: 30px;
-    background-color: #11102B;
-  }
-  .container {
-    position: relative;
-    width: 1200px;
-    min-height: 850px;
-    margin: 0 auto;
-    padding: 5px;
-    color: #fff;
-    display: flex;
-  
-    border-radius: 10px;
-    background-color: #11102B;
-  }
-  .left {
-    width: 60%;
-    padding: 20px;
-  }
-  .calendar {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    color: #878895;
-    border-radius: 5px;
-    background-color: #fff;
-  }
-  .fa-angle-left,
-  .fa-angle-right{
-    color: #FF3B30;
-  }
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 30px;
+  background-color: #708090;
+}
+.container {
+  position: relative;
+  width: 1200px;
+  min-height: 850px;
+  margin: 0 auto;
+  padding: 5px;
+  color: #fff;
+  display: flex;
+
+  border-radius: 10px;
+  background-color: #11102b;
+}
+.left {
+  width: 60%;
+  padding: 20px;
+}
+.calendar {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  color: #878895;
+  border-radius: 5px;
+  background-color: #fff;
+}
 .calendar::before,
 .calendar::after {
   content: "";
@@ -67,73 +62,155 @@ body {
   background-color: rgb(153, 153, 153);
 }
 .calendar .month {
-    width: 100%;
-    height: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 50px;
-    font-size: 1.2rem;
-    font-weight: 500;
-    text-transform: capitalize;
-  }
-  .calendar .weekdays {
-    width: 100%;
-    height: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-    font-size: 1rem;
-    font-weight: 500;
-    text-transform: capitalize;
-  }
-  .calendar .days {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding: 0 20px;
-    font-size: 1rem;
-    font-weight: 500;
-    margin-bottom: 20px;
-  }
-  .calendar .days .day {
-    width: 14.28%;
-    height: 90px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: var(--primary-clr);
-    border: 1px solid #f5f5f5;
-  }
-  .calendar .days .day:not(.prev-date, .next-date):hover {
-    color: #fff;
-    background-color: #FF3B30;
-  }
-  .calendar .days .prev-date,
+  width: 100%;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 50px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+/*arrow colour*/
+.fa-angle-left,
+.fa-angle-right {
+  color: #ff3b30;
+}
+.calendar .month .prev,
+.calendar .month .next {
+  cursor: pointer;
+}
+.calendar .month .prev:hover,
+.calendar .month .next:hover {
+  color: var(--primary-clr);
+}
+.calendar .weekdays {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+.weekdays div {
+  width: 14.28%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.calendar .days {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+/*lines separating the dates*/
+.calendar .days .day {
+  width: 14.28%;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--primary-clr);
+  border: 1px solid #f5f5f5;
+}
+
+/*To fix the cirlce to stay in same shape for different resolutions, only looks good for phone resolution*/
+.calendar .days .day:not(.prev-date, .next-date):hover {
+  color: var(--primary-clr);
+  background-color: #ff3b30;
+}
+.calendar .days .prev-date,
 .calendar .days .next-date {
-  color: #708090;
+  color: #b3b3b3;
 }
 .calendar .days .active {
-    position: relative;
-    font-size: 2rem;
-    color: var(--primary-clr);
-    font-weight: bold;
-    background-color: #f84c43;
-    border-radius: 50%; /* this creates the circle */
-    display: flex;
-  }
-  .calendar .days .active::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    box-shadow: 0 0 10px 2px var(--primary-clr);
+  position: relative;
+  font-size: 2rem;
+  color: var(--primary-clr);
+  font-weight: 90%;
+  background-color: #ff3b30;
 }
-  .calendar .days .today {
-    font-size: 2rem;
-  }
+.calendar .days .active::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 0 10px 2px var(--primary-clr);
+}
+.calendar .days .today {
+  font-size: 2rem;
+}
+.calendar .days .event {
+  position: relative;
+}
+.calendar .days .event::after {
+  content: "";
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  width: 75%;
+  height: 6px;
+  border-radius: 30px;
+  transform: translateX(-50%);
+  background-color: #ff3b30;
+}
+.calendar .goto-today {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  padding: 0 20px;
+  margin-bottom: 20px;
+  color: var(--primary-clr);
+}
+.calendar .goto-today .goto {
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1px solid var(--primary-clr);
+}
+.calendar .goto-today .goto input {
+  width: 100%;
+  height: 30px;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  padding: 0 20px;
+  color: var(--primary-clr);
+  border-radius: 5px;
+}
+.calendar .goto-today button {
+  padding: 5px 10px;
+  border: 1px solid var(--primary-clr);
+  border-radius: 5px;
+  background-color: transparent;
+  cursor: pointer;
+  color: var(--primary-clr);
+}
+.calendar .goto-today button:hover {
+  color: #fff;
+  background-color: var(--primary-clr);
+}
+.calendar .goto-today .goto button {
+  border: none;
+  border-left: 1px solid var(--primary-clr);
+  border-radius: 0;
+}
