@@ -7,6 +7,18 @@
   box-sizing: border-box;
   font-family: "SF Pro Display", Roboto, sans-serif;
 }
+/* nice scroll bar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #f5f5f5;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--primary-clr);
+  border-radius: 50px;
+}
 body {
   position: relative;
   min-height: 100vh;
@@ -126,6 +138,18 @@ body {
   color: var(--primary-clr);
   border: 1px solid #f5f5f5;
 }
+.calendar .days .day:nth-child(7n + 1) {
+  border-left: 2px solid #f5f5f5;
+}
+.calendar .days .day:nth-child(7n) {
+  border-right: 2px solid #f5f5f5;
+}
+.calendar .days .day:nth-child(-n + 7) {
+  border-top: 2px solid #f5f5f5;
+}
+.calendar .days .day:nth-child(n + 29) {
+  border-bottom: 2px solid #f5f5f5;
+}
 
 /*To fix the cirlce to stay in same shape for different resolutions, only looks good for phone resolution*/
 .calendar .days .day:not(.prev-date, .next-date):hover {
@@ -168,6 +192,16 @@ body {
   border-radius: 30px;
   transform: translateX(-50%);
   background-color: #ff3b30;
+}
+.calendar .days .day:hover.event::after {
+  background-color: #fff;
+}
+.calendar .days .active.event::after {
+  background-color: #fff;
+  bottom: 20%;
+}
+.calendar .days .active.event {
+  padding-bottom: 10px;
 }
 .calendar .goto-today {
   width: 100%;
@@ -265,7 +299,6 @@ body {
   padding: 0 20px;
   padding-left: 50px;
   color: #fff;
-  background: linear-gradient(90deg, #3f4458, transparent);
   cursor: pointer;
 }
 /* even event */
@@ -273,7 +306,7 @@ body {
   background: transparent;
 }
 .events .event:hover {
-  background: linear-gradient(90deg, var(--primary-clr), transparent);
+  background: linear-gradient(300deg, #4fdac1, transparent);
 }
 .events .event .title {
   display: flex;
@@ -286,7 +319,7 @@ body {
   margin-left: 20px;
 }
 .events .event i {
-  color: var(--primary-clr);
+  color: #4fdac1;
   font-size: 0.5rem;
 }
 .events .event:hover i {
@@ -295,7 +328,7 @@ body {
 .events .event .event-time {
   font-size: 0.8rem;
   font-weight: 400;
-  color: #878895;
+  color: #fff;
   margin-left: 15px;
   pointer-events: none;
 }
@@ -314,7 +347,7 @@ body {
   align-items: center;
   justify-content: center;
   opacity: 0.3;
-  color: var(--primary-clr);
+  color: #4fdac1;
   transform: translateY(-50%);
 }
 .events .event:hover::after {
@@ -509,24 +542,4 @@ body {
   .right .today-date {
     padding: 20px;
   }
-}
-
-.credits {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  text-align: center;
-  padding: 10px;
-  font-size: 12px;
-  color: #fff;
-  background-color: #b38add;
-}
-.credits a {
-  color: #fff;
-  text-decoration: none;
-  font-weight: 600;
-}
-.credits a:hover {
-  text-decoration: underline;
 }
