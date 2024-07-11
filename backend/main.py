@@ -1,9 +1,10 @@
-from flask import Flask,request
+from flask import Flask,request, jsonify
 from flask_restx import Api,Resource,fields
 from config import DevConfig
-from models import Booking
+from models import Booking, User
 from exts import db
 from flask_migrate import Migrate
+from werkzeug.security import generate_password_hash,check_password_hash
 
 
 app=Flask(__name__)
@@ -26,10 +27,51 @@ booking_model=api.model(
 )
 
 
+signup_model=api.model(
+    "SignUp",
+    {
+        "username":fields.String(),
+        "email":fields.String(),
+        "password":fields.String()
+    }
+)
+
+
 @api.route('/hello')
 class HelloResource(Resource):
     def get(self):
         return {"message":"Hello World"}
+
+
+@api.route('/signup')
+class SignUp(Resource):
+    @api.marshal_with(signup_model)
+    @api.expect(signup_model)
+    def post(self):
+        data=request.get_json()
+
+        username=data.get('username')
+
+        db_user=User.query.filter_by(username=username).first()
+
+        if db_user:
+            return jsonify({'message':f'{username} already exists'})
+
+        new_user=User(
+            username=data.get('username'),
+            email=data.get('email'),
+            password=generate_password_hash(data.get('password'))
+        )
+
+        new_user.save()
+
+        return jsonify({'message':f'{username} created successfully'})
+
+
+@api.route('/login')
+class Login(Resource):
+    def post(self):
+        pass
 
 
 @app.shell_context_processor
@@ -52,6 +94,7 @@ class BookingsResource(Resource):
         return bookings
    
     @api.marshal_with(booking_model)
+    @api.expect(booking_model)
     def post(self):
         '''Create a new booking'''
         

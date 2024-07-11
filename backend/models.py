@@ -49,4 +49,17 @@ class User(db.Model):
     def __repr__(self):
         return f"<User {self.username}>"
     
+    # SQL commands CRUD
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+        
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+        
+    def update(self,title,description):
+        self.title=title
+        self.description=description
+    
     
