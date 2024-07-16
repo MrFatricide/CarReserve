@@ -2,12 +2,12 @@ import requests
 import json
 
 # Define the URL to send the POST request to
-url = "http://127.0.0.1:5000/signup"
+action = "login"
+url = f"http://127.0.0.1:5000/{action}"
 
 # Define the JSON payload to send in the request
 payload = {
-    "username": "test3",
-    "email": "email3@gmail.com",
+    "username": "test4",
     "password": "password123"
 }
 
@@ -26,4 +26,5 @@ response = requests.post(url, data=json_payload, headers=headers)
 if response.status_code == 200:
     print(response.text)
 else:
+    print('failed')
     print(response.text)

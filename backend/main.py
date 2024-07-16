@@ -5,6 +5,7 @@ from models import Booking, User
 from exts import db
 from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash,check_password_hash
+from flask_jwt_extended import JWTManager,create_access_token, create_refresh_token
 
 
 app=Flask(__name__)
@@ -13,6 +14,7 @@ app.config.from_object(DevConfig)
 db.init_app(app)
 
 migrate=Migrate(app,db)
+JWTManager(app)
 
 api=Api(app,doc='/docs')
 
@@ -37,6 +39,14 @@ signup_model=api.model(
 )
 
 
+login_model=api.model(
+    "Login",
+    {
+        "username":fields.String(),
+        "password":fields.String()
+    }
+)
+
 @api.route('/hello')
 class HelloResource(Resource):
     def get(self):
@@ -55,7 +65,8 @@ class SignUp(Resource):
         db_user=User.query.filter_by(username=username).first()
 
         if db_user:
-            return jsonify({'message':f'{username} already exists'})
+            # return jsonify({'message':f'{username} already exists'})
+            return {'message':f'{username} already exists'}
 
         new_user=User(
             username=data.get('username'),
@@ -65,13 +76,28 @@ class SignUp(Resource):
 
         new_user.save()
 
-        return jsonify({'message':f'{username} created successfully'})
+        #return jsonify({'message':f'{username} created successfully'})
+        return new_user, 201
 
 
 @api.route('/login')
 class Login(Resource):
+
+    @api.expect(login_model)
     def post(self):
-        pass
+        data = request.get_json()
+        username = data.get('username')
+        password = data.get('password')
+
+        db_user=User.query.filter_by(username=username).first()
+
+        if db_user and check_password_hash(db_user.password,password):
+            
+            access_token=create_access_token(identity=db_user.username)
+            refresh_token=create_refresh_token(identity=db_user.username)
+
+            return {"access token":access_token, "refresh token":refresh_token}
+        
 
 
 @app.shell_context_processor
